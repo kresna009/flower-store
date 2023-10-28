@@ -13,7 +13,7 @@ class WelcomeView extends StatelessWidget {
           /// Background Image
           Image.asset(
             'assets/images/bg.png',
-            height: Controller.i.size.height,
+            height: FlowerController.i.size.height,
             fit: BoxFit.fitHeight,
           ),
 

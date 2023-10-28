@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           page: () => const WelcomeView(),
           binding: BindingsBuilder(
             () {
-              Get.put(Controller());
+              Get.put(FlowerController());
             },
           ),
         ),

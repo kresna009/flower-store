@@ -143,7 +143,7 @@ cardBunga(
   String harga,
 ) {
   return Container(
-    width: Controller.i.size.width,
+    width: FlowerController.i.size.width,
     margin: const EdgeInsets.only(
       bottom: 15,
     ),
@@ -233,93 +233,3 @@ cardBunga(
     ),
   );
 }
-
-// Container(
-//   width: Controller.i.size.width,
-//   padding: const EdgeInsets.only(
-//     bottom: 15,
-//   ),
-//   height: 100,
-//   decoration: BoxDecoration(
-//     color: Colors.white,
-//     borderRadius: BorderRadius.circular(10),
-//   ),
-//   child: Stack(
-//     children: [
-//       Positioned(
-//         left: -50,
-//         top: 10,
-//         bottom: -30,
-//         child: Opacity(
-//           opacity: 0.5,
-//           child: Image.asset(
-//             'assets/images/daisy.png',
-//           ),
-//         ),
-//       ),
-//       const Padding(
-//         padding: EdgeInsets.all(15),
-//         child: Row(
-//           // crossAxisAlignment: CrossAxisAlignment.center,
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             // SizedBox(
-//             //   width: 60,
-//             // ),
-//             Expanded(
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 crossAxisAlignment: CrossAxisAlignment.center,
-//                 children: [
-//                   Row(
-//                     // mainAxisAlignment: MainAxisAlignment.center,
-//                     // crossAxisAlignment: CrossAxisAlignment.center,
-//                     children: [
-//                       Text(
-//                         "Daisy",
-//                         style: TextStyle(
-//                           color: Colors.black,
-//                           fontSize: 30,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         width: 8,
-//                       ),
-//                       Text(
-//                         "( Bellis perennis )",
-//                         style: TextStyle(
-//                           color: Colors.black,
-//                           fontSize: 15,
-//                           fontWeight: FontWeight.bold,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   Flexible(
-//                     child: Text(
-//                       "Bunga daisy, atau yang juga dikenal sebagai bunga matahari, adalah jenis bunga yang populer dan mudah dikenali karena memiliki kepala bunga berbentuk cakram dengan kelopak bunga berwarna putih dan pusat berwarna kuning. Bunga ini biasanya memiliki tangkai yang panjang dan daun berbentuk daun lanset. Bunga daisy sering dianggap sebagai simbol kesucian, kepolosan, dan kebahagiaan. Mereka biasanya tumbuh di berbagai kondisi cuaca dan tanah, membuatnya cocok untuk taman dan pot bunga. Daisy juga dapat digunakan dalam pengaturan bunga segar atau dijadikan hiasan dalam berbagai perayaan dan acara.",
-//                       overflow: TextOverflow.clip,
-//                       textAlign: TextAlign.justify,
-//                       // style: ,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             SizedBox(
-//               width: 10,
-//             ),
-//             Text(
-//               "Rp. 100k",
-//               style: TextStyle(
-//                 fontWeight: FontWeight.w500,
-//                 fontSize: 20,
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     ],
-//   ),
-// ),

@@ -1,54 +1,12 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
-
-class FlowerImage {
-  final String imagePath;
-  final String title;
-  final String description;
-
-  FlowerImage(this.imagePath, this.title, this.description);
-}
-
-class SearchController extends GetxController {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  Rx<File?> pickedImage = Rx<File?>(null);
-  RxList<FlowerImage> flowerImages = <FlowerImage>[].obs;
-
-  Future<void> pickImage() async {
-    final imagePicker = ImagePicker();
-    final pickedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
-
-    if (pickedImage != null) {
-      this.pickedImage.value = File(pickedImage.path);
-    }
-  }
-
-  void savePicture() {
-    if (pickedImage.value != null) {
-      String title = titleController.text;
-      String description = descriptionController.text;
-
-      if (title.isNotEmpty && description.isNotEmpty) {
-        FlowerImage flowerImage =
-            FlowerImage(pickedImage.value!.path, title, description);
-        flowerImages.add(flowerImage);
-
-        titleController.clear();
-        descriptionController.clear();
-        pickedImage.value = null;
-      }
-    }
-  }
-}
+import 'package:flower_store/controllers/controller.dart';
 
 class SearchView extends StatelessWidget {
-  final SearchController searchController = Get.put(SearchController());
-
+  final FlowerController searchController = Get.put(FlowerController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
