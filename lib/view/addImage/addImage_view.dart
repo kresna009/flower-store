@@ -110,11 +110,3 @@ class SearchView extends StatelessWidget {
     );
   }
 }
-
-void main() {
-  runApp(
-    GetMaterialApp(
-      home: SearchView(),
-    ),
-  );
-}
