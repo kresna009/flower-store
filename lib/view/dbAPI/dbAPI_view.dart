@@ -2,40 +2,47 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+void main() => runApp(MyApp());
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: PlantList(),
+      title: 'Plant List App',
+      home: PlantListScreen(),
     );
   }
 }
 
-class PlantList extends StatefulWidget {
+class PlantListScreen extends StatefulWidget {
   @override
-  _PlantListState createState() => _PlantListState();
+  _PlantListScreenState createState() => _PlantListScreenState();
 }
 
-class _PlantListState extends State<PlantList> {
-  final String apiUrl =
-      "https://perenual.com/api/species-list?key=sk-1w81653cce73d827f2742";
-  List<dynamic> plantData = [];
+class _PlantListScreenState extends State<PlantListScreen> {
+  List<Plant> _plants = [];
 
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchPlantList();
   }
 
-  Future<void> fetchData() async {
+  Future<void> fetchPlantList() async {
+    final apiKey =
+        'mlBKGsf6yXuElxvrjzxwWefdpaBl771xLEFhWsgCJRY'; // Replace with your Trefle API key
+    final apiUrl = 'https://trefle.io/api/v1/plants?token=$apiKey';
+
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      final List<dynamic> plantList = data['data'];
       setState(() {
-        plantData = json.decode(response.body);
+        _plants = plantList.map((item) => Plant.fromJson(item)).toList();
       });
     } else {
-      throw Exception('Failed to load data from the API');
+      throw Exception('Failed to load plant data');
     }
   }
 
@@ -43,19 +50,34 @@ class _PlantListState extends State<PlantList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Plant List"),
+        title: Text('Plant List'),
       ),
-      body: ListView.builder(
-        itemCount: plantData.length,
-        itemBuilder: (context, index) {
-          final plant = plantData[index];
-          return ListTile(
-            title: Text(plant['common_name']),
-            subtitle: Text(plant['scientific_name']),
-            leading: Image.network(plant['image_url']),
-          );
-        },
-      ),
+      body: _plants.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: _plants.length,
+              itemBuilder: (context, index) {
+                final plant = _plants[index];
+                return ListTile(
+                  title: Text(plant.name),
+                  subtitle: Text(plant.description),
+                );
+              },
+            ),
+    );
+  }
+}
+
+class Plant {
+  final String name;
+  final String description;
+
+  Plant({required this.name, required this.description});
+
+  factory Plant.fromJson(Map<String, dynamic> json) {
+    return Plant(
+      name: json['common_name'] ?? json['scientific_name'],
+      description: json['family_common_name'] ?? 'N/A',
     );
   }
 }

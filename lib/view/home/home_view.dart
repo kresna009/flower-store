@@ -106,10 +106,10 @@ class HomeView extends StatelessWidget {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Populer"),
+                  Text("Popular"),
                   Text("Recomended"),
-                  Text("Indor"),
-                  Text("Outdor"),
+                  Text("Indoor"),
+                  Text("Outdoor"),
                 ],
               ),
               const SizedBox(
