@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed('/addImage'),
+        onPressed: () => Get.toNamed('/webView'),
         child: const Icon(Icons.add_rounded),
       ),
       body: Padding(
