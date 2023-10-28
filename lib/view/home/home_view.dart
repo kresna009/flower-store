@@ -25,7 +25,6 @@ class HomeView extends StatelessWidget {
       "Bunga daisy, atau yang juga dikenal sebagai bunga matahari...",
       "10k",
     ),
-    // Add more FlowerCard objects for other flowers...
   ];
 
   int _selectedIndex = 0;
@@ -88,9 +87,10 @@ class HomeView extends StatelessWidget {
   // Define the list of bottom navigation bar items without 'const'.
   static List<BottomNavBarItem> _bottomNavBarItems = [
     BottomNavBarItem(
-      imagePath: 'assets/home.png',
+      imagePath: 'assets/data.png',
       action: () {
-        // Define the action for the "Home" button
+        onPressed:
+        () => Get.toNamed('/WebviewPage');
       },
     ),
     BottomNavBarItem(
