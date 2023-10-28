@@ -42,6 +42,56 @@ class HomeView extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.format_list_bulleted_rounded,
+                    color: Colors.black,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.shopping_cart,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Text(
+                "Welcome to Griya Flower",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Populer"),
+                  Text("Recomended"),
+                  Text("Indor"),
+                  Text("Outdor"),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -87,9 +137,8 @@ class HomeView extends StatelessWidget {
   // Define the list of bottom navigation bar items without 'const'.
   static List<BottomNavBarItem> _bottomNavBarItems = [
     BottomNavBarItem(
-      imagePath: 'assets/data.png',
+      imagePath: 'assets/images/data.png',
       action: () {
-        onPressed:
         () => Get.toNamed('/WebviewPage');
       },
     ),
