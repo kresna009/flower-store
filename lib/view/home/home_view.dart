@@ -133,9 +133,8 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
-      // Create a custom bottom navigation bar with clickable images.
       bottomNavigationBar: Container(
-        height: 60, // Adjust the height as needed
+        height: 60,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -157,41 +156,39 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  // Define the list of bottom navigation bar items without 'const'.
   static List<BottomNavBarItem> _bottomNavBarItems = [
     BottomNavBarItem(
-      imagePath: 'assets/images/data.png',
+      icon: Icons.home,
       action: () {
-        () => Get.toNamed('/addImage');
+        onPressed:
+        Get.toNamed("/home");
       },
     ),
     BottomNavBarItem(
-      imagePath: 'assets/search.png',
+      icon: Icons.search,
       action: () {
-        // Define the action for the "Search" button
+        onPressed:
+        Get.toNamed("/webView");
       },
     ),
     BottomNavBarItem(
-      imagePath: 'assets/favorite.png',
+      icon: Icons.add,
       action: () {
-        // Define the action for the "Favorite" button
+        Get.toNamed("/addImage");
       },
     ),
     BottomNavBarItem(
-      imagePath: 'assets/cart.png',
+      icon: Icons.list,
       action: () {
-        // Define the action for the "Cart" button
+        Get.toNamed("/flowerList");
       },
     ),
     BottomNavBarItem(
-      imagePath: 'assets/profile.png',
-      action: () {
-        // Define the action for the "Profile" button
-      },
+      icon: Icons.person,
+      action: () {},
     ),
   ];
 
-  // Build a clickable image widget for each navigation item.
   Widget buildBottomNavItem(int index) {
     return InkWell(
       onTap: () {
@@ -204,10 +201,9 @@ class HomeView extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.all(10),
-        child: Image.asset(
-          _bottomNavBarItems[index].imagePath,
-          width: 30,
-          height: 30,
+        child: Icon(
+          _bottomNavBarItems[index].icon,
+          size: 30,
           color: _selectedIndex == index ? Colors.blue : Colors.grey,
         ),
       ),

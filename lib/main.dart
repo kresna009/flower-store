@@ -1,6 +1,6 @@
 import 'package:flower_store/controllers/controller.dart';
 import 'package:flower_store/view/addImage/addImage_view.dart';
-import 'package:flower_store/view/database/databaseAPI.dart';
+import 'package:flower_store/view/dbAPI/dbAPI_view.dart';
 import 'package:flower_store/view/home/home_view.dart';
 import 'package:flower_store/view/webview/webview_view.dart';
 import 'package:flower_store/view/welcome/welcome_view.dart';
@@ -34,15 +34,15 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/addImage",
-          page: () => SearchView(),
+          page: () => AddImage(),
         ),
         GetPage(
           name: "/webView",
           page: () => const WebViewPage(),
         ),
         GetPage(
-          name: "/planList",
-          page: () => PlantList(),
+          name: "/flowerList",
+          page: () => FlowerList(),
         )
       ],
       initialRoute: "/",

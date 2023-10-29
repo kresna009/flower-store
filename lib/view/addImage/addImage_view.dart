@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flower_store/controllers/controller.dart';
 
-class SearchView extends StatelessWidget {
+class AddImage extends StatelessWidget {
   final FlowerController searchController = Get.put(FlowerController());
   @override
   Widget build(BuildContext context) {

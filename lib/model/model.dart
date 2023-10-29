@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class FlowerImageModel {
   final String imagePath;
@@ -20,13 +20,10 @@ class FlowerCard {
 }
 
 class BottomNavBarItem {
-  final String imagePath;
-  final VoidCallback action;
+  final IconData icon;
+  final Function action;
 
-  BottomNavBarItem({
-    required this.imagePath,
-    required this.action,
-  });
+  BottomNavBarItem({required this.icon, required this.action});
 }
 
 class Plant {
