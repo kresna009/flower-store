@@ -160,14 +160,12 @@ class HomeView extends StatelessWidget {
     BottomNavBarItem(
       icon: Icons.home,
       action: () {
-        onPressed:
         Get.toNamed("/home");
       },
     ),
     BottomNavBarItem(
       icon: Icons.search,
       action: () {
-        onPressed:
         Get.toNamed("/webView");
       },
     ),
