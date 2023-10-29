@@ -28,3 +28,17 @@ class BottomNavBarItem {
     required this.action,
   });
 }
+
+class Plant {
+  final String name;
+  final String description;
+
+  Plant({required this.name, required this.description});
+
+  factory Plant.fromJson(Map<String, dynamic> json) {
+    return Plant(
+      name: json['common_name'] ?? json['scientific_name'],
+      description: json['family_common_name'] ?? 'N/A',
+    );
+  }
+}

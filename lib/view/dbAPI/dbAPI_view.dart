@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:flower_store/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-void main() => runApp(MyApp());
+void main() => runApp(FlowerList());
 
-class MyApp extends StatelessWidget {
+class FlowerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,20 +65,6 @@ class _PlantListScreenState extends State<PlantListScreen> {
                 );
               },
             ),
-    );
-  }
-}
-
-class Plant {
-  final String name;
-  final String description;
-
-  Plant({required this.name, required this.description});
-
-  factory Plant.fromJson(Map<String, dynamic> json) {
-    return Plant(
-      name: json['common_name'] ?? json['scientific_name'],
-      description: json['family_common_name'] ?? 'N/A',
     );
   }
 }
