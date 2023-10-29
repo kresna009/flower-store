@@ -56,10 +56,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed('/addImage'),
-        child: const Icon(Icons.add_rounded),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SafeArea(
@@ -190,9 +186,7 @@ class HomeView extends StatelessWidget {
   Widget buildBottomNavItem(int index) {
     return InkWell(
       onTap: () {
-        // Execute the action associated with the button.
         _bottomNavBarItems[index].action();
-        // Update the selected tab.
         setState(() {
           _selectedIndex = index;
         });
