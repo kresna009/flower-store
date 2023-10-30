@@ -53,7 +53,7 @@ class AddImage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: searchController.savePicture,
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        primary: Color(0xFFFFDDE4),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0.0),
                         ),
@@ -61,7 +61,7 @@ class AddImage extends StatelessWidget {
                       child: Text(
                         'Simpan',
                         style: TextStyle(
-                          color: Colors.pink,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -71,7 +71,7 @@ class AddImage extends StatelessWidget {
                 return ElevatedButton(
                   onPressed: searchController.pickImage,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
+                    primary: Color(0xFFFFDDE4),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0.0),
                     ),
@@ -79,7 +79,7 @@ class AddImage extends StatelessWidget {
                   child: Text(
                     'Pilih Gambar',
                     style: TextStyle(
-                      color: const Color.fromARGB(255, 255, 255, 255),
+                      color: Colors.black,
                     ),
                   ),
                 );
@@ -167,7 +167,6 @@ class AddImage extends StatelessWidget {
   Widget buildBottomNavItem(int index) {
     return InkWell(
       onTap: () {
-        // Execute the action associated with the button.
         _bottomNavBarItems[index].action();
       },
       child: Container(
@@ -175,7 +174,7 @@ class AddImage extends StatelessWidget {
         child: Icon(
           _bottomNavBarItems[index].icon,
           size: 30,
-          color: _selectedIndex == index ? Colors.blue : Colors.grey,
+          color: _selectedIndex == index ? Color(0xFFFFDDE4) : Colors.grey,
         ),
       ),
     );

@@ -1,71 +1,41 @@
-import 'dart:convert';
 import 'package:flower_store/model/model.dart';
+import 'package:flower_store/controllers/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+
+int _selectedIndex = 3;
 
 class FlowerList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Plant List App',
-      home: PlantListScreen(),
-    );
-  }
-}
+  final FlowerController controller = Get.put(FlowerController());
 
-class PlantListScreen extends StatefulWidget {
-  @override
-  _PlantListScreenState createState() => _PlantListScreenState();
-}
-
-class _PlantListScreenState extends State<PlantListScreen> {
-  List<Plant> _plants = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchPlantList();
-  }
-
-  Future<void> fetchPlantList() async {
-    final apiKey =
-        'mlBKGsf6yXuElxvrjzxwWefdpaBl771xLEFhWsgCJRY'; // Replace with your Trefle API key
-    final apiUrl = 'https://trefle.io/api/v1/plants?token=$apiKey';
-
-    final response = await http.get(Uri.parse(apiUrl));
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      final List<dynamic> plantList = data['data'];
-      setState(() {
-        _plants = plantList.map((item) => Plant.fromJson(item)).toList();
-      });
-    } else {
-      throw Exception('Failed to load plant data');
-    }
-  }
-
-  int _selectedIndex = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Plant List'),
+        title: Text(
+          'Flower List',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Color(0xFFFFDDE4),
       ),
-      body: _plants.isEmpty
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _plants.length,
-              itemBuilder: (context, index) {
-                final plant = _plants[index];
-                return ListTile(
-                  title: Text(plant.name),
-                  subtitle: Text(plant.description),
-                );
-              },
-            ),
+      body: Obx(
+        () => controller.plants.isEmpty
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: controller.plants.length,
+                itemBuilder: (context, index) {
+                  final plant = controller.plants[index];
+                  return Card(
+                    elevation: 3,
+                    margin: EdgeInsets.all(8),
+                    child: ListTile(
+                      title: Text(plant.name),
+                      subtitle: Text(plant.description),
+                    ),
+                  );
+                },
+              ),
+      ),
       bottomNavigationBar: Container(
         height: 60,
         decoration: BoxDecoration(
@@ -123,7 +93,6 @@ class _PlantListScreenState extends State<PlantListScreen> {
   Widget buildBottomNavItem(int index) {
     return InkWell(
       onTap: () {
-        // Execute the action associated with the button.
         _bottomNavBarItems[index].action();
       },
       child: Container(
@@ -131,7 +100,7 @@ class _PlantListScreenState extends State<PlantListScreen> {
         child: Icon(
           _bottomNavBarItems[index].icon,
           size: 30,
-          color: _selectedIndex == index ? Colors.blue : Colors.grey,
+          color: _selectedIndex == index ? Color(0xFFFFDDE4) : Colors.grey,
         ),
       ),
     );

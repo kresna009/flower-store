@@ -21,7 +21,11 @@ class _WebViewPageState extends State<WebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("WebView"),
+        title: Text(
+          "WebView",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Color(0xFFFFDDE4),
       ),
       body: WebViewWidget(controller: controller),
       bottomNavigationBar: Container(
@@ -81,7 +85,6 @@ class _WebViewPageState extends State<WebViewPage> {
   Widget buildBottomNavItem(int index) {
     return InkWell(
       onTap: () {
-        // Execute the action associated with the button.
         _bottomNavBarItems[index].action();
       },
       child: Container(
@@ -89,7 +92,7 @@ class _WebViewPageState extends State<WebViewPage> {
         child: Icon(
           _bottomNavBarItems[index].icon,
           size: 30,
-          color: _selectedIndex == index ? Colors.blue : Colors.grey,
+          color: _selectedIndex == index ? Color(0xFFFFDDE4) : Colors.grey,
         ),
       ),
     );

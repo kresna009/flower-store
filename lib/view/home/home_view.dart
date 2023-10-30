@@ -187,23 +187,17 @@ class HomeView extends StatelessWidget {
     return InkWell(
       onTap: () {
         _bottomNavBarItems[index].action();
-        setState(() {
-          _selectedIndex = index;
-        });
       },
       child: Container(
         padding: EdgeInsets.all(10),
         child: Icon(
           _bottomNavBarItems[index].icon,
           size: 30,
-          color: _selectedIndex == index ? Colors.blue : Colors.grey,
+          color: _selectedIndex == index ? Color(0xFFFFDDE4) : Colors.grey,
         ),
       ),
     );
   }
-
-  // Define the setState method to update the selected tab.
-  void setState(VoidCallback fn) {}
 }
 
 Widget cardBunga(FlowerCard flowerCard) {

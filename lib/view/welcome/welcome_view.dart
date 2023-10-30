@@ -49,7 +49,7 @@ class WelcomeView extends StatelessWidget {
                   onTap: () => Get.toNamed('/home'),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.lightBlue,
+                      color: Color(0xFFFFDDE4),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     margin: const EdgeInsets.only(top: 50),
@@ -58,7 +58,7 @@ class WelcomeView extends StatelessWidget {
                     child: const Text(
                       "Get Started",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 18,
                       ),
                     ),
