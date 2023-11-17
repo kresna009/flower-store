@@ -6,10 +6,11 @@ import 'package:get/get.dart';
 import 'package:flower_store/model/model.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class FlowerController extends GetxController {
   static FlowerController get i => Get.find();
-  Size size = MediaQuery.of(Get.context!).size;
+  late Size size;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   Rx<File?> pickedImage = Rx<File?>(null);

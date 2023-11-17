@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flower_store/controllers/controller.dart';
 import 'package:flower_store/model/model.dart';
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -18,6 +22,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+int _selectedIndex = 5;
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -53,15 +59,63 @@ class _RegistrationPageState extends State<RegistrationPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                User user = User(
-                  email: _emailController.text.trim(),
-                  password: _passwordController.text.trim(),
+                _authController.registerUser(
+                  User(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  ),
                 );
-                _authController.registerUser(user);
               },
               child: Text('Register'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  static List<BottomNavBarItem> _bottomNavBarItems = [
+    BottomNavBarItem(
+      icon: Icons.home,
+      action: () {
+        Get.toNamed("/home");
+      },
+    ),
+    BottomNavBarItem(
+      icon: Icons.search,
+      action: () {
+        Get.toNamed("/webView");
+      },
+    ),
+    BottomNavBarItem(
+      icon: Icons.add,
+      action: () {
+        Get.toNamed("/addImage");
+      },
+    ),
+    BottomNavBarItem(
+      icon: Icons.list,
+      action: () {
+        Get.toNamed("/flowerList");
+      },
+    ),
+    BottomNavBarItem(
+      icon: Icons.person,
+      action: () {},
+    ),
+  ];
+
+  Widget buildBottomNavItem(int index) {
+    return InkWell(
+      onTap: () {
+        _bottomNavBarItems[index].action();
+      },
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Icon(
+          _bottomNavBarItems[index].icon,
+          size: 30,
+          color: _selectedIndex == index ? Color(0xFFFFDDE4) : Colors.grey,
         ),
       ),
     );
