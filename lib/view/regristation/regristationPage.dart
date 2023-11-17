@@ -20,6 +20,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Registration Page'),
+        backgroundColor: Color(0xFFFFDDE4),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
