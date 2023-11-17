@@ -1,10 +1,22 @@
 import 'package:flower_store/controllers/controller.dart';
-import 'package:flower_store/main.dart';
 import 'package:flower_store/model/model.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Your Flower Store',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: RegistrationPage(),
+    );
+  }
 }
 
 class RegistrationPage extends StatefulWidget {
