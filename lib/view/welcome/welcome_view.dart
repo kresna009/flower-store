@@ -49,7 +49,7 @@ class WelcomeView extends StatelessWidget {
                       color: Color(0xFFFFDDE4),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    margin: const EdgeInsets.only(top: 50),
+                    margin: const EdgeInsets.only(top: 0),
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 30),
                     child: const Text(
