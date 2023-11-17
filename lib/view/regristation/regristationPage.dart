@@ -1,29 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flower_store/controllers/controller.dart';
 import 'package:flower_store/model/model.dart';
 import 'package:get/get.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Your Flower Store',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: RegistrationPage(),
-    );
-  }
-}
-
-int _selectedIndex = 5;
+int _selectedIndex = 4;
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -71,6 +51,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0, -2),
+              blurRadius: 6,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(
+            _bottomNavBarItems.length,
+            (index) => buildBottomNavItem(index),
+          ),
+        ),
+      ),
     );
   }
 
@@ -101,7 +101,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     ),
     BottomNavBarItem(
       icon: Icons.person,
-      action: () {},
+      action: () {
+        Get.toNamed("/loginPage");
+      },
     ),
   ];
 

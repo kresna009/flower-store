@@ -78,7 +78,9 @@ class _WebViewPageState extends State<WebViewPage> {
     ),
     BottomNavBarItem(
       icon: Icons.person,
-      action: () {},
+      action: () {
+        Get.toNamed("/loginPage");
+      },
     ),
   ];
 

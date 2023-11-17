@@ -160,7 +160,9 @@ class AddImage extends StatelessWidget {
     ),
     BottomNavBarItem(
       icon: Icons.person,
-      action: () {},
+      action: () {
+        Get.toNamed("/loginPage");
+      },
     ),
   ];
 

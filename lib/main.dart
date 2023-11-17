@@ -3,6 +3,7 @@ import 'package:flower_store/controllers/controller.dart';
 import 'package:flower_store/view/addImage/addImage_view.dart';
 import 'package:flower_store/view/dbAPI/dbAPI_view.dart';
 import 'package:flower_store/view/home/home_view.dart';
+import 'package:flower_store/view/regristation/regristationPage.dart';
 import 'package:flower_store/view/webview/webview_view.dart';
 import 'package:flower_store/view/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/flowerList",
           page: () => FlowerList(),
+        ),
+        GetPage(
+          name: "/loginPage",
+          page: () => RegistrationPage(),
         )
       ],
       initialRoute: "/",

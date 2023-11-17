@@ -1,22 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flower_store/view/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 import 'package:flower_store/model/model.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class FlowerController extends GetxController {
   static FlowerController get i => Get.find();
-  late Size size;
+  Size size = MediaQuery.of(Get.context!).size;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   Rx<File?> pickedImage = Rx<File?>(null);
   RxList<FlowerImageModel> flowerImages = <FlowerImageModel>[].obs;
   var plants = <Plant>[].obs;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  RxBool isLoading = false.obs;
 
   Future<void> registerUser(user) async {
     try {
@@ -24,8 +25,14 @@ class FlowerController extends GetxController {
         email: user.email,
         password: user.password,
       );
-    } catch (e) {
-      print("Error during registration: $e");
+      Get.snackbar('Success', 'Registration successful',
+          backgroundColor: Colors.green);
+      Get.off(WelcomeView());
+    } catch (error) {
+      Get.snackbar('Error', 'Registration failed: $error',
+          backgroundColor: Colors.red);
+    } finally {
+      isLoading.value = false;
     }
   }
 

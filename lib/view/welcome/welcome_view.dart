@@ -10,14 +10,11 @@ class WelcomeView extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          /// Background Image
           Image.asset(
             'assets/images/bg.png',
             height: FlowerController.i.size.height,
             fit: BoxFit.fitHeight,
           ),
-
-          /// Content
           Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
