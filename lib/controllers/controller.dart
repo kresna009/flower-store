@@ -19,6 +19,7 @@ class FlowerController extends GetxController {
   var plants = <Plant>[].obs;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   RxBool isLoading = false.obs;
+  final RxBool isLoggedIn = false.obs;
 
   // Define a getter for the current user's email
   String get currentUserEmail {
@@ -120,6 +121,15 @@ class FlowerController extends GetxController {
         descriptionController.clear();
         pickedImage.value = null;
       }
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+      Get.offAllNamed('/login'); 
+    } catch (error) {
+      print('Error during logout: $error');
     }
   }
 }
