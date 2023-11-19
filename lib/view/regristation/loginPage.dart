@@ -1,4 +1,3 @@
-import 'package:flower_store/controllers/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -6,7 +5,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatelessWidget {
   final RxBool isLoggedIn = false.obs;
-  final FlowerController _flowerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +12,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Login Page'),
         backgroundColor: Color(0xFFFFDDE4),
-        actions: [
-          Obx(() {
-            if (_flowerController.isLoggedIn.value) {
-              return IconButton(
-                icon: Icon(Icons.exit_to_app),
-                onPressed: () {
-                  _flowerController.logout();
-                },
-              );
-            } else {
-              return SizedBox.shrink();
-            }
-          }),
-        ],
+        actions: [],
       ),
       body: Center(
         child: Column(

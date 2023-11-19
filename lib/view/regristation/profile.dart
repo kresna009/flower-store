@@ -6,6 +6,7 @@ import 'package:flower_store/controllers/controller.dart';
 class ProfilePage extends StatelessWidget {
   final FlowerController flowerController = Get.find();
   int _selectedIndex = 4;
+  final RxBool isLoggedIn = true.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,14 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                final RxBool isLoggedIn = false.obs;
+                flowerController.logout();
+                Get.offNamed("/");
+              },
+              child: Text('Logout'),
+            ),
           ],
         ),
       ),
