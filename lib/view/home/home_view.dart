@@ -180,7 +180,7 @@ class HomeView extends StatelessWidget {
     BottomNavBarItem(
       icon: Icons.person,
       action: () {
-        Get.toNamed("/loginPage");
+        Get.toNamed("/profilePage");
       },
     ),
   ];

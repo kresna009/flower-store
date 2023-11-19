@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flower_store/controllers/controller.dart';
-import 'package:flower_store/model/model.dart';
 
-class RegistrationPage extends StatefulWidget {
-  @override
-  _RegistrationPageState createState() => _RegistrationPageState();
-}
-
-class _RegistrationPageState extends State<RegistrationPage> {
+class EmailLogin extends StatelessWidget {
+  final FlowerController flowerController = Get.put(FlowerController());
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final FlowerController _authController = FlowerController();
+
+  Future<void> _loginWithEmailAndPassword() async {
+    flowerController.isLoading.value = true;
+
+    try {
+      await flowerController.loginWithEmailAndPassword(
+        _emailController.text,
+        _passwordController.text,
+      );
+      Get.offNamed('/home');
+    } catch (e) {
+      print('Login Error: $e');
+    } finally {
+      flowerController.isLoading.value = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration Page'),
+        title: Text('Email Login'),
         backgroundColor: Color(0xFFFFDDE4),
       ),
       body: Padding(
@@ -26,25 +37,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
           children: [
             TextField(
               controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(labelText: 'Email'),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 16),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
               obscureText: true,
+              decoration: InputDecoration(labelText: 'Password'),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                _authController.registerUser(
-                  User(
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim(),
-                  ),
-                );
-              },
-              child: Text('Register'),
+              onPressed: _loginWithEmailAndPassword,
+              child: Text('Login'),
             ),
           ],
         ),

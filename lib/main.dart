@@ -3,6 +3,9 @@ import 'package:flower_store/controllers/controller.dart';
 import 'package:flower_store/view/addImage/addImage_view.dart';
 import 'package:flower_store/view/dbAPI/dbAPI_view.dart';
 import 'package:flower_store/view/home/home_view.dart';
+import 'package:flower_store/view/regristation/emailPage.dart';
+import 'package:flower_store/view/regristation/loginPage.dart';
+import 'package:flower_store/view/regristation/profile.dart';
 import 'package:flower_store/view/regristation/regristationPage.dart';
 import 'package:flower_store/view/webview/webview_view.dart';
 import 'package:flower_store/view/welcome/welcome_view.dart';
@@ -55,6 +58,18 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/regPage",
           page: () => RegistrationPage(),
+        ),
+        GetPage(
+          name: "/loginPage",
+          page: () => LoginPage(),
+        ),
+        GetPage(
+          name: "/emailPage",
+          page: () => EmailLogin(),
+        ),
+        GetPage(
+          name: "/profilePage",
+          page: () => ProfilePage(),
         )
       ],
       initialRoute: "/",

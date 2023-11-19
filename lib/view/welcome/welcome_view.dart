@@ -43,7 +43,7 @@ class WelcomeView extends StatelessWidget {
                 ),
                 Image.asset('assets/images/deco.png'),
                 GestureDetector(
-                  onTap: () => Get.toNamed('/home'),
+                  onTap: () => Get.toNamed('/loginPage'),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Color(0xFFFFDDE4),

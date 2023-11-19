@@ -1,33 +1,34 @@
 import 'package:flower_store/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flower_store/controllers/controller.dart';
 
-class WebViewPage extends StatefulWidget {
-  const WebViewPage({super.key});
-
-  @override
-  State<WebViewPage> createState() => _WebViewPageState();
-}
-
-class _WebViewPageState extends State<WebViewPage> {
-  final controller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.disabled)
-    ..loadRequest(Uri.parse('https://www.flower-db.com/en'));
-
-  int _selectedIndex = 1;
+class ProfilePage extends StatelessWidget {
+  final FlowerController flowerController = Get.find();
+  int _selectedIndex = 4;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "WebView",
-          style: TextStyle(color: Colors.black),
-        ),
+        title: Text('Profile'),
         backgroundColor: Color(0xFFFFDDE4),
       ),
-      body: WebViewWidget(controller: controller),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Welcome, ${flowerController.currentUserEmail}',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      ),
       bottomNavigationBar: Container(
         height: 60,
         decoration: BoxDecoration(
