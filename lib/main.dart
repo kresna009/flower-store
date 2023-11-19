@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           page: () => FlowerList(),
         ),
         GetPage(
-          name: "/loginPage",
+          name: "/regPage",
           page: () => RegistrationPage(),
         )
       ],

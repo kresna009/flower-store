@@ -39,7 +39,7 @@ class WelcomeView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 15,
                 ),
                 Image.asset('assets/images/deco.png'),
                 GestureDetector(
@@ -49,15 +49,31 @@ class WelcomeView extends StatelessWidget {
                       color: Color(0xFFFFDDE4),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    margin: const EdgeInsets.only(top: 0),
+                    margin: const EdgeInsets.only(top: 20),
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 30),
                     child: const Text(
-                      "Get Started",
+                      "Login",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 18,
                       ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed('/regPage');
+                  },
+                  child: Text(
+                    "Don't have an account? Register now",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
