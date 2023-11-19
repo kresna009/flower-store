@@ -42,7 +42,7 @@ class FlowerController extends GetxController {
         password: password.trim(),
       );
 
-      // Navigate to the next screen or perform other actions after successful login
+     // Navigate to the next screen or perform other actions after successful login
       print('Email/Password Login Successful');
     } on FirebaseAuthException catch (e) {
       // Handle specific Firebase Auth exceptions
