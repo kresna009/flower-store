@@ -38,6 +38,9 @@ dependencies:
   firebase_core: ^2.22.0
   firebase_auth: ^4.6.0
   google_sign_in: ^6.1.6
+  shared_preferences: ^2.2.2
+  firebase_messaging: ^14.7.4
+  flutter_local_notifications: ^16.1.0
 
 dev_dependencies:
   flutter_test:

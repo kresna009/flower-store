@@ -11,7 +11,7 @@ import 'package:flower_store/view/webview/webview_view.dart';
 import 'package:flower_store/view/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -19,6 +19,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Get.putAsync(() async => await SharedPreferences.getInstance());
+  await FirebaseMessagingHandler().initPushNotification();
+  await FirebaseMessagingHandler().initLocalNotification();
   runApp(const MyApp());
 }
 
