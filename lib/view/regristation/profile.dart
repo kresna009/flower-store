@@ -29,7 +29,6 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                final RxBool isLoggedIn = false.obs;
                 flowerController.logout();
                 Get.offNamed("/");
               },
