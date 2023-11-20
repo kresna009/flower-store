@@ -7,22 +7,6 @@ class EmailLogin extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> _loginWithEmailAndPassword() async {
-    flowerController.isLoading.value = true;
-
-    try {
-      await flowerController.loginWithEmailAndPassword(
-        _emailController.text,
-        _passwordController.text,
-      );
-      Get.offNamed('/home');
-    } catch (e) {
-      print('Login Error: $e');
-    } finally {
-      flowerController.isLoading.value = false;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +32,13 @@ class EmailLogin extends StatelessWidget {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _loginWithEmailAndPassword,
+              onPressed: () async {
+                await flowerController.loginWithEmailAndPassword(
+                  _emailController.text,
+                  _passwordController.text,
+                );
+                Get.offNamed('/home');
+              },
               child: Text('Login'),
             ),
           ],
