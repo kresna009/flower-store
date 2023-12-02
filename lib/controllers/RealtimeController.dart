@@ -6,7 +6,6 @@ class RealtimeController extends ClientController {
   @override
   void onInit() {
     super.onInit();
-// appwrite
     realtime = Realtime(client);
   }
 

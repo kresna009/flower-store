@@ -5,21 +5,22 @@ import 'package:get/get.dart';
 
 class StorageController extends ClientController {
   Storage? storage;
+
   @override
   void onInit() {
     super.onInit();
-// appwrite
+    // AppWrite
     storage = Storage(client);
   }
 
-  Future storeImage() async {
+  Future<void> storeImage() async {
     try {
       final result = await storage!.createFile(
-        bucketId: '[BUCKET_ID]',
+        bucketId: '656a07047fef6ede410e',
         fileId: ID.unique(),
         file: InputFile.fromPath(
-          path: './path-to-files/image.jpg',
-          filename: 'image.jpg',
+          path: 'flower-store/assets/images/lily.png',
+          filename: 'lily.png',
         ),
       );
       print("StorageController:: storeImage $result");

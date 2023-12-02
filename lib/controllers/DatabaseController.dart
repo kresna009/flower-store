@@ -8,21 +8,20 @@ class DatabaseController extends ClientController {
   @override
   void onInit() {
     super.onInit();
-// appwrite
     databases = Databases(client);
   }
 
   Future storeUserName(Map map) async {
     try {
       final result = await databases!.createDocument(
-        databaseId: "YOUR_DATABASE_ID",
+        databaseId: "656a1d54766455b8728e",
         documentId: ID.unique(),
-        collectionId: "YOUR_COLLECTION_ID",
+        collectionId: "656a1d749d956234915f",
         data: map,
         permissions: [
-          Permission.read(Role.user("USERID")),
-          Permission.update(Role.user("USERID")),
-          Permission.delete(Role.user("USERID")),
+          Permission.read(Role.user("Test123")),
+          Permission.update(Role.user("Test123")),
+          Permission.delete(Role.user("Test123")),
         ],
       );
       print("DatabaseController:: storeUserName $databases");

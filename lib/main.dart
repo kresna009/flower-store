@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flower_store/controllers/AccountController.dart';
 import 'package:flower_store/controllers/controller.dart';
 import 'package:flower_store/view/addImage/addImage_view.dart';
 import 'package:flower_store/view/dbAPI/dbAPI_view.dart';
 import 'package:flower_store/view/home/home_view.dart';
 import 'package:flower_store/view/regristation/emailPage.dart';
 import 'package:flower_store/view/regristation/loginPage.dart';
-import 'package:flower_store/view/regristation/profile.dart';
 import 'package:flower_store/view/regristation/regristationPage.dart';
 import 'package:flower_store/view/webview/webview_view.dart';
 import 'package:flower_store/view/welcome/welcome_view.dart';
@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
+import 'view/appWrite/accountReg_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Get.putAsync(() async => await SharedPreferences.getInstance());
+  Get.put(AccountController());
   await FirebaseMessagingHandler().initPushNotification();
   await FirebaseMessagingHandler().initLocalNotification();
   runApp(const MyApp());
@@ -72,7 +74,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/profilePage",
-          page: () => ProfilePage(),
+          page: () => CreateAccountPage(),
         )
       ],
       initialRoute: "/",

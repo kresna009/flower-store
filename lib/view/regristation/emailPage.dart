@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flower_store/controllers/controller.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class EmailLogin extends StatelessWidget {
   final FlowerController flowerController = Get.put(FlowerController());
