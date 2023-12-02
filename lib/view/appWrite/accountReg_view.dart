@@ -8,8 +8,7 @@ class CreateAccountPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController userIdController =
-      TextEditingController(); // Add this controller
+  final TextEditingController userIdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +35,12 @@ class CreateAccountPage extends StatelessWidget {
               decoration: InputDecoration(labelText: 'Name'),
             ),
             TextFormField(
-              controller: userIdController, // Add this TextFormField for userId
+              controller: userIdController,
               decoration: InputDecoration(labelText: 'User ID'),
             ),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Call the createAccount method from the controller
                 accountController.createAccount({
                   'userId': userIdController.text,
                   'email': emailController.text,
