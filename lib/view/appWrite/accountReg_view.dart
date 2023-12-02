@@ -4,7 +4,6 @@ import 'package:flower_store/controllers/AccountController.dart';
 
 class CreateAccountPage extends StatelessWidget {
   final AccountController accountController = Get.put(AccountController());
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();

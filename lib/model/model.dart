@@ -52,12 +52,9 @@ class AccountData {
   final String name;
   final String email;
 
-  // Add other properties as needed
-
   AccountData({
     required this.userId,
     required this.name,
     required this.email,
-    // Add other properties as needed
   });
 }

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flower_store/controllers/AccountController.dart';
 import 'package:flower_store/controllers/controller.dart';
 import 'package:flower_store/view/addImage/addImage_view.dart';
+import 'package:flower_store/view/appWrite/database_view.dart';
 import 'package:flower_store/view/dbAPI/dbAPI_view.dart';
 import 'package:flower_store/view/home/home_view.dart';
 import 'package:flower_store/view/regristation/emailPage.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/addImage",
-          page: () => AddImage(),
+          page: () => DatabaseView(),
         ),
         GetPage(
           name: "/webView",
