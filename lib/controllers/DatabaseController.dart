@@ -37,15 +37,9 @@ class DatabaseController {
         collectionId: 'tb_flowers',
         databaseId: '656a1d54766455b8728e',
       );
-
-      if (response.documents is List<Document>) {
-        return List<Map<String, dynamic>>.from(response.documents.map(
-          (Document document) => document.data as Map<String, dynamic>,
-        ));
-      } else {
-        print('Invalid response format when reading documents');
-        return [];
-      }
+      return List<Map<String, dynamic>>.from(response.documents.map(
+        (Document document) => document.data as Map<String, dynamic>,
+      ));
     } catch (e) {
       print('Error reading documents: $e');
       return [];

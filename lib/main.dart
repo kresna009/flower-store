@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flower_store/controllers/AccountController.dart';
 import 'package:flower_store/controllers/controller.dart';
-import 'package:flower_store/view/addImage/addImage_view.dart';
 import 'package:flower_store/view/appWrite/database_view.dart';
 import 'package:flower_store/view/dbAPI/dbAPI_view.dart';
 import 'package:flower_store/view/home/home_view.dart';

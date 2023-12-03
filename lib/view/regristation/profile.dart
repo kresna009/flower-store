@@ -1,9 +1,9 @@
 import 'package:flower_store/model/model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flower_store/controllers/controller.dart';
 
+// ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
   final FlowerController flowerController = Get.find();
   int _selectedIndex = 4;

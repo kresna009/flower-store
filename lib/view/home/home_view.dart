@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flower_store/controllers/controller.dart';
 
+// ignore: must_be_immutable
 class HomeView extends StatelessWidget {
   final FlowerController homeController = Get.put(FlowerController());
 

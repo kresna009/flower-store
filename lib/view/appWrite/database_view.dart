@@ -1,6 +1,5 @@
 import 'package:flower_store/controllers/DatabaseController.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DatabaseView extends StatefulWidget {
   @override
@@ -45,7 +44,6 @@ class _FlowerListViewState extends State<DatabaseView> {
                     nameController.text,
                     descriptionController.text,
                   );
-                  // Clear the text fields after creating the document
                   nameController.clear();
                   descriptionController.clear();
                 }
@@ -58,7 +56,6 @@ class _FlowerListViewState extends State<DatabaseView> {
                 final result = await databaseController.read();
                 setState(() {
                   flowers = result;
-                  // Clear the selected document IDs when the "Read" button is pressed
                   selectedDocumentIds.clear();
                 });
               },
@@ -96,18 +93,14 @@ class _FlowerListViewState extends State<DatabaseView> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ElevatedButton(
-                          onPressed: () async {
+                          onPressed: () {
                             for (var documentId in selectedDocumentIds) {
-                              await databaseController.update(
+                              databaseController.update(
                                 documentId,
                                 'Updated Name',
                                 'Updated Description',
                               );
                             }
-                            final result = await databaseController.read();
-                            setState(() {
-                              flowers = result;
-                            });
                           },
                           child: Text('Update'),
                         ),
@@ -117,10 +110,6 @@ class _FlowerListViewState extends State<DatabaseView> {
                             for (var documentId in selectedDocumentIds) {
                               await databaseController.delete(documentId);
                             }
-                            final result = await databaseController.read();
-                            setState(() {
-                              flowers = result;
-                            });
                           },
                           child: Text('Delete'),
                         ),

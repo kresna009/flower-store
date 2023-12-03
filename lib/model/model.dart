@@ -58,3 +58,17 @@ class AccountData {
     required this.email,
   });
 }
+
+class Flower {
+  final String documentId;
+  final String name;
+  final String description;
+  bool isSelected; // Add isSelected property
+
+  Flower({
+    required this.documentId,
+    required this.name,
+    required this.description,
+    this.isSelected = false, // Provide a default value
+  });
+}
