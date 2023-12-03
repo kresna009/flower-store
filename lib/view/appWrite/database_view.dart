@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 
 class DatabaseView extends StatefulWidget {
   @override
-  _DatabaseView createState() => _DatabaseView();
+  _FlowerListViewState createState() => _FlowerListViewState();
 }
 
-class _DatabaseView extends State<DatabaseView> {
+class _FlowerListViewState extends State<DatabaseView> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+
   final DatabaseController databaseController = DatabaseController();
-  final TextEditingController _editNameController = TextEditingController();
-  final TextEditingController _editDescriptionController = TextEditingController();
+
+  List<Map<String, dynamic>> flowers = [];
+  List<String> selectedDocumentIds = [];
 
   @override
   Widget build(BuildContext context) {
@@ -19,171 +21,116 @@ class _DatabaseView extends State<DatabaseView> {
       appBar: AppBar(
         title: Text('Flower List'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: nameController,
-                    decoration: InputDecoration(labelText: 'Name'),
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: descriptionController,
-                    decoration: InputDecoration(labelText: 'Description'),
-                  ),
-                ),
-              ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Name'),
             ),
-          ),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  if (nameController.text.isNotEmpty &&
-                      descriptionController.text.isNotEmpty) {
-                    databaseController.create(
-                      DateTime.now().millisecondsSinceEpoch.toString(),
-                      nameController.text,
-                      descriptionController.text,
-                    );
-                    nameController.clear();
-                    descriptionController.clear();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Data added successfully'),
-                      ),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Please enter both name and description'),
-                      ),
-                    );
-                  }
-                },
-                child: Text('Create'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {});
-                },
-                child: Text('Read'),
-              ),
-            ],
-          ),
-          Expanded(
-            child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: databaseController.read(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  final data = snapshot.data;
-                  return ListView.builder(
-                    itemCount: data!.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(data[index]['name']),
-                        subtitle: Text(data[index]['description']),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {
-                                _editData(context, data[index]);
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                _deleteData(data[index]['documentId']);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Data deleted successfully'),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+            TextField(
+              controller: descriptionController,
+              decoration: InputDecoration(labelText: 'Description'),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                if (nameController.text.isNotEmpty &&
+                    descriptionController.text.isNotEmpty) {
+                  databaseController.create(
+                    DateTime.now().millisecondsSinceEpoch.toString(),
+                    nameController.text,
+                    descriptionController.text,
                   );
+                  // Clear the text fields after creating the document
+                  nameController.clear();
+                  descriptionController.clear();
                 }
               },
+              child: Text('Create'),
             ),
-          ),
-        ],
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () async {
+                final result = await databaseController.read();
+                setState(() {
+                  flowers = result;
+                  // Clear the selected document IDs when the "Read" button is pressed
+                  selectedDocumentIds.clear();
+                });
+              },
+              child: Text('Read'),
+            ),
+            SizedBox(height: 16.0),
+            Expanded(
+              child: ListView.builder(
+                itemCount: flowers.length,
+                itemBuilder: (context, index) {
+                  final flower = flowers[index];
+                  return ListTile(
+                    leading: Checkbox(
+                      value: flower['isSelected'] ?? false,
+                      onChanged: (value) {
+                        setState(() {
+                          flower['isSelected'] = value;
+                          if (value == true) {
+                            final documentId = flower['documentId'];
+                            if (documentId != null) {
+                              selectedDocumentIds.add(documentId);
+                            }
+                          } else {
+                            final documentId = flower['documentId'];
+                            if (documentId != null) {
+                              selectedDocumentIds.remove(documentId);
+                            }
+                          }
+                        });
+                      },
+                    ),
+                    title: Text(flower['name']),
+                    subtitle: Text(flower['description']),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            for (var documentId in selectedDocumentIds) {
+                              databaseController.update(
+                                documentId,
+                                'Updated Name',
+                                'Updated Description',
+                              );
+                            }
+                          },
+                          child: Text('Update'),
+                        ),
+                        SizedBox(width: 8.0),
+                        ElevatedButton(
+                          onPressed: () async {
+                            for (var documentId in selectedDocumentIds) {
+                              await documentId;
+                              await databaseController.delete(documentId);
+                            }
+                          },
+                          child: Text('Delete'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+}
 
-  void _editData(BuildContext context, Map<String, dynamic> data) async {
-    _editNameController.text = data['name'];
-    _editDescriptionController.text = data['description'];
-
-    bool dataUpdated = await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Edit Data'),
-          content: Column(
-            children: [
-              TextField(
-                controller: _editNameController,
-                decoration: InputDecoration(labelText: 'Name'),
-              ),
-              TextField(
-                controller: _editDescriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, false);
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Implement update functionality
-                databaseController.update(
-                  data['documentId'],
-                  _editNameController.text,
-                  _editDescriptionController.text,
-                );
-                Navigator.pop(context, true); // Data updated
-              },
-              child: Text('Update'),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (dataUpdated == true) {
-      setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Data updated successfully'),
-        ),
-      );
-    }
-  }
-
-  void _deleteData(String documentId) {
-    // Implement delete functionality
-    databaseController.delete(documentId);
-    setState(() {});
-  }
+void main() {
+  runApp(MaterialApp(
+    home: DatabaseView(),
+  ));
 }
