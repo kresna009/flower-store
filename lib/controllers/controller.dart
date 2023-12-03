@@ -142,6 +142,16 @@ class FlowerController extends GetxController {
       print('Error during logout: $error');
     }
   }
+
+  void addFlower(createdFlower) {}
+
+  getFlower(String documentId) {}
+
+  void updateFlower(String documentId, updatedFlower) {}
+
+  void removeFlower(String documentId) {}
+
+  void setFlowers(List list) {}
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

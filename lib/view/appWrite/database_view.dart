@@ -1,5 +1,6 @@
 import 'package:flower_store/controllers/DatabaseController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DatabaseView extends StatefulWidget {
   @override
@@ -95,14 +96,18 @@ class _FlowerListViewState extends State<DatabaseView> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             for (var documentId in selectedDocumentIds) {
-                              databaseController.update(
+                              await databaseController.update(
                                 documentId,
                                 'Updated Name',
                                 'Updated Description',
                               );
                             }
+                            final result = await databaseController.read();
+                            setState(() {
+                              flowers = result;
+                            });
                           },
                           child: Text('Update'),
                         ),
@@ -110,9 +115,12 @@ class _FlowerListViewState extends State<DatabaseView> {
                         ElevatedButton(
                           onPressed: () async {
                             for (var documentId in selectedDocumentIds) {
-                              await documentId;
                               await databaseController.delete(documentId);
                             }
+                            final result = await databaseController.read();
+                            setState(() {
+                              flowers = result;
+                            });
                           },
                           child: Text('Delete'),
                         ),
