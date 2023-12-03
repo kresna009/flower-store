@@ -1,6 +1,5 @@
 import 'package:flower_store/controllers/DatabaseController.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DatabaseView extends StatefulWidget {
   @override
@@ -37,10 +36,10 @@ class _FlowerListViewState extends State<DatabaseView> {
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (nameController.text.isNotEmpty &&
                     descriptionController.text.isNotEmpty) {
-                  databaseController.create(
+                  await databaseController.create(
                     DateTime.now().millisecondsSinceEpoch.toString(),
                     nameController.text,
                     descriptionController.text,
@@ -48,6 +47,7 @@ class _FlowerListViewState extends State<DatabaseView> {
                   // Clear the text fields after creating the document
                   nameController.clear();
                   descriptionController.clear();
+                  _refreshList();
                 }
               },
               child: Text('Create'),
@@ -104,10 +104,7 @@ class _FlowerListViewState extends State<DatabaseView> {
                                 'Updated Description',
                               );
                             }
-                            final result = await databaseController.read();
-                            setState(() {
-                              flowers = result;
-                            });
+                            _refreshList();
                           },
                           child: Text('Update'),
                         ),
@@ -117,10 +114,7 @@ class _FlowerListViewState extends State<DatabaseView> {
                             for (var documentId in selectedDocumentIds) {
                               await databaseController.delete(documentId);
                             }
-                            final result = await databaseController.read();
-                            setState(() {
-                              flowers = result;
-                            });
+                            _refreshList();
                           },
                           child: Text('Delete'),
                         ),
@@ -134,6 +128,14 @@ class _FlowerListViewState extends State<DatabaseView> {
         ),
       ),
     );
+  }
+
+  Future<void> _refreshList() async {
+    final result = await databaseController.read();
+    setState(() {
+      flowers = result;
+      selectedDocumentIds.clear();
+    });
   }
 }
 
