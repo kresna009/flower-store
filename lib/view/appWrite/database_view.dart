@@ -3,225 +3,186 @@ import 'package:flutter/material.dart';
 
 class DatabaseView extends StatefulWidget {
   @override
-  _DatabaseViewState createState() => _DatabaseViewState();
+  _DatabaseView createState() => _DatabaseView();
 }
 
-class _DatabaseViewState extends State<DatabaseView> {
-  final DatabaseController _databaseController = DatabaseController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
-  String? get documentId => null;
+class _DatabaseView extends State<DatabaseView> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  final DatabaseController databaseController = DatabaseController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Database CRUD'),
+        title: Text('Flower List'),
       ),
       body: Column(
         children: [
-          _buildForm(),
-          _buildDocumentList(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            controller: _nameController,
-            decoration: InputDecoration(labelText: 'Name'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a name';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: _descriptionController,
-            decoration: InputDecoration(labelText: 'Description'),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a description';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 16),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () => _createDocument(),
-                child: Text('Create'),
-              ),
-              SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: () => _readDocuments(),
-                child: Text('Read'),
-              ),
-              SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: () => _updateDocument(),
-                child: Text('Update'),
-              ),
-              SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: () => _deleteDocument(),
-                child: Text('Delete'),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDocumentList() {
-    return Expanded(
-      child: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _readDocuments(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            List<Map<String, dynamic>> documents = snapshot.data ?? [];
-            return ListView.builder(
-              itemCount: documents.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(documents[index]['name']),
-                  subtitle: Text(documents[index]['description']),
-                );
-              },
-            );
-          }
-        },
-      ),  
-    );  
-  }
-
-Widget _buildDocumentListFlowers() {
-  return ListView.builder(
-    itemCount: _databaseController.flowerController.flowers.length,
-    itemBuilder: (context, index) => Card(
-      elevation: 10,
-      shadowColor: Colors.blueAccent,
-      color: Color(0xFFFFDDE4),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
               children: [
-                Checkbox(
-                  value: _databaseController.flowerController.flowers[index].isDone,
-                  onChanged: (value) {
-                    setState(() {
-                      _databaseController.flowerController.flowers[index].isDone = value!;
-                      _databaseController.update(
-                        _databaseController.flowerController.flowers[index].documentId,
-                        _databaseController.flowerController.flowers[index].name,
-                        _databaseController.flowerController.flowers[index].description,
-                      );
-                    });
-                  },
+                Expanded(
+                  child: TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(labelText: 'Name'),
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          _databaseController.flowerController.flowers[index].name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "(${_databaseController.flowerController.flowers[index].createdAt.day}-${_databaseController.flowerController.flowers[index].createdAt.month}-${_databaseController.flowerController.flowers[index].createdAt.year})",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    Text(_databaseController.flowerController.flowers[index].description)
-                  ],
+                Expanded(
+                  child: TextField(
+                    controller: descriptionController,
+                    decoration: InputDecoration(labelText: 'Description'),
+                  ),
                 ),
               ],
             ),
-            IconButton(
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
+          ),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  if (nameController.text.isNotEmpty &&
+                      descriptionController.text.isNotEmpty) {
+                    databaseController.create(
+                      DateTime.now().millisecondsSinceEpoch.toString(),
+                      nameController.text,
+                      descriptionController.text,
+                    );
+                    nameController.clear();
+                    descriptionController.clear();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Data added successfully'),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Please enter both name and description'),
+                      ),
+                    );
+                  }
+                },
+                child: Text('Create'),
               ),
-              onPressed: () {
-                setState(() {
-                  _databaseController.delete(
-                    _databaseController.flowerController.flowers[index].documentId,
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {});
+                },
+                child: Text('Read'),
+              ),
+            ],
+          ),
+          Expanded(
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: databaseController.read(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  final data = snapshot.data;
+                  return ListView.builder(
+                    itemCount: data!.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(data[index]['name']),
+                        subtitle: Text(data[index]['description']),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                _editData(context, data[index]);
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _deleteData(data[index]['documentId']);
+                                setState(() {});
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Data deleted successfully'),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   );
-                });
+                }
               },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    ),
-  );
-}
-
-
-  Future<List<Map<String, dynamic>>> _readDocuments() async {
-    return await _databaseController.read();
+    );
   }
 
-  void _createDocument() {
-    if (_formKey.currentState?.validate() ?? false) {
-      _databaseController.create(
-        DateTime.now().millisecondsSinceEpoch.toString(),
-        _nameController.text,
-        _descriptionController.text,
+  void _editData(BuildContext context, Map<String, dynamic> data) async {
+    nameController.text = data['name'];
+    descriptionController.text = data['description'];
+
+    bool dataUpdated = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Data'),
+          content: Column(
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(labelText: 'Name'),
+              ),
+              TextField(
+                controller: descriptionController,
+                decoration: InputDecoration(labelText: 'Description'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Implement update functionality
+                databaseController.update(
+                  data['documentId'],
+                  nameController.text,
+                  descriptionController.text,
+                );
+                Navigator.pop(context, true); // Data updated
+              },
+              child: Text('Update'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (dataUpdated == true) {
+      setState(() {});
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Data updated successfully'),
+        ),
       );
-      _clearForm();
     }
   }
 
-  void _updateDocument() {
-    if (_formKey.currentState?.validate() ?? false) {
-      _databaseController.update(
-        'DOCUMENT_ID_TO_UPDATE',
-        _nameController.text,
-        _descriptionController.text,
-      );
-      _clearForm();
-    }
-  }
-
-  void _deleteDocument() {
-    _databaseController.delete('DOCUMENT_ID_TO_DELETE');
-  }
-
-  void _clearForm() {
-    _nameController.clear();
-    _descriptionController.clear();
+  void _deleteData(String documentId) {
+    // Implement delete functionality
+    databaseController.delete(documentId);
   }
 }
