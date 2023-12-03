@@ -9,8 +9,9 @@ class DatabaseView extends StatefulWidget {
 class _DatabaseView extends State<DatabaseView> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-
   final DatabaseController databaseController = DatabaseController();
+  final TextEditingController _editNameController = TextEditingController();
+  final TextEditingController _editDescriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +105,6 @@ class _DatabaseView extends State<DatabaseView> {
                               icon: Icon(Icons.delete),
                               onPressed: () {
                                 _deleteData(data[index]['documentId']);
-                                setState(() {});
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text('Data deleted successfully'),
@@ -127,8 +127,8 @@ class _DatabaseView extends State<DatabaseView> {
   }
 
   void _editData(BuildContext context, Map<String, dynamic> data) async {
-    nameController.text = data['name'];
-    descriptionController.text = data['description'];
+    _editNameController.text = data['name'];
+    _editDescriptionController.text = data['description'];
 
     bool dataUpdated = await showDialog(
       context: context,
@@ -138,11 +138,11 @@ class _DatabaseView extends State<DatabaseView> {
           content: Column(
             children: [
               TextField(
-                controller: nameController,
+                controller: _editNameController,
                 decoration: InputDecoration(labelText: 'Name'),
               ),
               TextField(
-                controller: descriptionController,
+                controller: _editDescriptionController,
                 decoration: InputDecoration(labelText: 'Description'),
               ),
             ],
@@ -159,8 +159,8 @@ class _DatabaseView extends State<DatabaseView> {
                 // Implement update functionality
                 databaseController.update(
                   data['documentId'],
-                  nameController.text,
-                  descriptionController.text,
+                  _editNameController.text,
+                  _editDescriptionController.text,
                 );
                 Navigator.pop(context, true); // Data updated
               },
@@ -184,5 +184,6 @@ class _DatabaseView extends State<DatabaseView> {
   void _deleteData(String documentId) {
     // Implement delete functionality
     databaseController.delete(documentId);
+    setState(() {});
   }
 }
