@@ -12,6 +12,8 @@ class DatabaseController {
     database = Databases(client);
   }
 
+  get flowerController => null;
+
   Future<void> create(
       String documentId, String name, String description) async {
     try {

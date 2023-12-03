@@ -11,6 +11,8 @@ class _DatabaseViewState extends State<DatabaseView> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  
+  String? get documentId => null;
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +106,89 @@ class _DatabaseViewState extends State<DatabaseView> {
             );
           }
         },
-      ),
-    );
+      ),  
+    );  
   }
+
+Widget _buildDocumentListFlowers() {
+  return ListView.builder(
+    itemCount: _databaseController.flowerController.flowers.length,
+    itemBuilder: (context, index) => Card(
+      elevation: 10,
+      shadowColor: Colors.blueAccent,
+      color: Color(0xFFFFDDE4),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Checkbox(
+                  value: _databaseController.flowerController.flowers[index].isDone,
+                  onChanged: (value) {
+                    setState(() {
+                      _databaseController.flowerController.flowers[index].isDone = value!;
+                      _databaseController.update(
+                        _databaseController.flowerController.flowers[index].documentId,
+                        _databaseController.flowerController.flowers[index].name,
+                        _databaseController.flowerController.flowers[index].description,
+                      );
+                    });
+                  },
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          _databaseController.flowerController.flowers[index].name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "(${_databaseController.flowerController.flowers[index].createdAt.day}-${_databaseController.flowerController.flowers[index].createdAt.month}-${_databaseController.flowerController.flowers[index].createdAt.year})",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    Text(_databaseController.flowerController.flowers[index].description)
+                  ],
+                ),
+              ],
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+              onPressed: () {
+                setState(() {
+                  _databaseController.delete(
+                    _databaseController.flowerController.flowers[index].documentId,
+                  );
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 
   Future<List<Map<String, dynamic>>> _readDocuments() async {
     return await _databaseController.read();
