@@ -106,9 +106,9 @@ class _FlowerListViewState extends State<DatabaseView> {
                         ),
                         SizedBox(width: 8.0),
                         ElevatedButton(
-                          onPressed: () async {
+                          onPressed: () {
                             for (var documentId in selectedDocumentIds) {
-                              await databaseController.delete(documentId);
+                              databaseController.delete(documentId);
                             }
                           },
                           child: Text('Delete'),

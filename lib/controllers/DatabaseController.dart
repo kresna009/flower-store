@@ -50,9 +50,9 @@ class DatabaseController {
       String documentId, String name, String description) async {
     try {
       await database.updateDocument(
+          documentId: documentId,
           collectionId: 'tb_flowers',
           databaseId: '656a1d54766455b8728e',
-          documentId: documentId,
           data: {
             'name': name,
             'description': description,
@@ -62,12 +62,12 @@ class DatabaseController {
     }
   }
 
-  Future<void> delete(String documentId) async {
+  void delete(String documentId) {
     try {
-      await database.deleteDocument(
+      database.deleteDocument(
+        documentId: documentId,
         collectionId: 'tb_flowers',
         databaseId: '656a1d54766455b8728e',
-        documentId: documentId,
       );
     } catch (e) {
       print('Error deleting document: $e');
