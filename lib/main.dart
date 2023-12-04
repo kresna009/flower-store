@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flower_store/controllers/AccountController.dart';
 import 'package:flower_store/controllers/controller.dart';
-import 'package:flower_store/view/appWrite/database_view.dart';
+import 'package:flower_store/view/appWrite/databaseAppwrite_view.dart';
 import 'package:flower_store/view/dbAPI/dbAPI_view.dart';
 import 'package:flower_store/view/home/home_view.dart';
 import 'package:flower_store/view/regristation/emailPage.dart';
@@ -24,6 +24,7 @@ void main() async {
   Get.put(AccountController());
   await FirebaseMessagingHandler().initPushNotification();
   await FirebaseMessagingHandler().initLocalNotification();
+
   runApp(const MyApp());
 }
 

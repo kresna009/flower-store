@@ -1,15 +1,20 @@
 import 'package:flower_store/controllers/DatabaseController.dart';
+import 'package:flower_store/model/model.dart';
+import 'package:flower_store/provider/appWrite_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DatabaseView extends StatefulWidget {
   @override
-  _FlowerListViewState createState() => _FlowerListViewState();
+  _DatabaseView createState() => _DatabaseView();
 }
 
-class _FlowerListViewState extends State<DatabaseView> {
+int _selectedIndex = 2;
+
+class _DatabaseView extends State<DatabaseView> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-
+  final DatabaseProvider databaseProvider = DatabaseProvider();
   final DatabaseController databaseController = DatabaseController();
 
   List<Map<String, dynamic>> flowers = [];
@@ -19,7 +24,11 @@ class _FlowerListViewState extends State<DatabaseView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flower List'),
+        title: Text(
+          'Flower Database',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Color(0xFFFFDDE4),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -50,7 +59,7 @@ class _FlowerListViewState extends State<DatabaseView> {
               },
               child: Text('Create'),
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: 4),
             ElevatedButton(
               onPressed: () async {
                 final result = await databaseController.read();
@@ -74,7 +83,8 @@ class _FlowerListViewState extends State<DatabaseView> {
                         setState(() {
                           flower['isSelected'] = value;
                           if (value == true) {
-                            final documentId = flower['documentId'];
+                            final documentId = flower['\$id'];
+                            print(flower['\$id']);
                             if (documentId != null) {
                               selectedDocumentIds.add(documentId);
                             }
@@ -94,11 +104,12 @@ class _FlowerListViewState extends State<DatabaseView> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
+                            print(selectedDocumentIds);
                             for (var documentId in selectedDocumentIds) {
                               databaseController.update(
                                 documentId,
-                                'Updated Name',
-                                'Updated Description',
+                                nameController.value.text,
+                                descriptionController.value.text,
                               );
                             }
                           },
@@ -107,9 +118,8 @@ class _FlowerListViewState extends State<DatabaseView> {
                         SizedBox(width: 8.0),
                         ElevatedButton(
                           onPressed: () {
-                            for (var documentId in selectedDocumentIds) {
-                              databaseController.delete(documentId);
-                            }
+                            databaseProvider
+                                .deleteSelectedFlowers(selectedDocumentIds);
                           },
                           child: Text('Delete'),
                         ),
@@ -122,12 +132,75 @@ class _FlowerListViewState extends State<DatabaseView> {
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0, -2),
+              blurRadius: 6,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(
+            _bottomNavBarItems.length,
+            (index) => buildBottomNavItem(index),
+          ),
+        ),
+      ),
     );
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: DatabaseView(),
-  ));
+List<BottomNavBarItem> _bottomNavBarItems = [
+  BottomNavBarItem(
+    icon: Icons.home,
+    action: () {
+      Get.toNamed("/home");
+    },
+  ),
+  BottomNavBarItem(
+    icon: Icons.search,
+    action: () {
+      Get.toNamed("/webView");
+    },
+  ),
+  BottomNavBarItem(
+    icon: Icons.add,
+    action: () {
+      Get.toNamed("/addImage");
+    },
+  ),
+  BottomNavBarItem(
+    icon: Icons.list,
+    action: () {
+      Get.toNamed("/flowerList");
+    },
+  ),
+  BottomNavBarItem(
+    icon: Icons.person,
+    action: () {
+      Get.toNamed("/profilePage");
+    },
+  ),
+];
+
+Widget buildBottomNavItem(int index) {
+  return InkWell(
+    onTap: () {
+      _bottomNavBarItems[index].action();
+    },
+    child: Container(
+      padding: EdgeInsets.all(10),
+      child: Icon(
+        _bottomNavBarItems[index].icon,
+        size: 30,
+        color: _selectedIndex == index ? Color(0xFFFFDDE4) : Colors.grey,
+      ),
+    ),
+  );
 }

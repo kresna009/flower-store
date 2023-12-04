@@ -9,7 +9,6 @@ class StorageController extends ClientController {
   @override
   void onInit() {
     super.onInit();
-    // AppWrite
     storage = Storage(client);
   }
 

@@ -5,14 +5,16 @@ class DatabaseController {
   late final Databases database;
 
   DatabaseController() {
+    init();
+  }
+
+  void init() {
     final client = Client()
         .setEndpoint('https://cloud.appwrite.io/v1')
         .setProject('656a01667089bdef83d1');
 
     database = Databases(client);
   }
-
-  get flowerController => null;
 
   Future<void> create(
       String documentId, String name, String description) async {
@@ -62,15 +64,16 @@ class DatabaseController {
     }
   }
 
-  void delete(String documentId) {
+  void delete(String documentId) async {
+    database ?? init();
     try {
-      database.deleteDocument(
+      await database!.deleteDocument(
         documentId: documentId,
         collectionId: 'tb_flowers',
         databaseId: '656a1d54766455b8728e',
       );
     } catch (e) {
-      print('Error deleting document: $e');
+      rethrow;
     }
   }
 }
