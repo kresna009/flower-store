@@ -1,12 +1,12 @@
+import 'package:flower_store/controllers/ApiController.dart';
 import 'package:flower_store/model/model.dart';
-import 'package:flower_store/controllers/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 int _selectedIndex = 3;
 
 class FlowerList extends StatelessWidget {
-  final FlowerController controller = Get.put(FlowerController());
+  final ApiController controller = Get.put(ApiController());
 
   @override
   Widget build(BuildContext context) {

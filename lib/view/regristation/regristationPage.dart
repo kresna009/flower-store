@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flower_store/controllers/controller.dart';
+import 'package:flower_store/controllers/Controller.dart';
 import 'package:flower_store/model/model.dart';
 
 class RegistrationPage extends StatefulWidget {

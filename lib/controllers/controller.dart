@@ -20,34 +20,9 @@ class FlowerController extends GetxController {
   TextEditingController _passwordController = TextEditingController();
   Rx<File?> pickedImage = Rx<File?>(null);
   RxList<FlowerImageModel> flowerImages = <FlowerImageModel>[].obs;
-  var plants = <Plant>[].obs;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   RxBool isLoading = false.obs;
   final RxBool isLoggedIn = false.obs;
-
-  void onInit() {
-    super.onInit();
-    fetchPlantList();
-  }
-
-  Future<void> fetchPlantList() async {
-    final apiKey = 'mlBKGsf6yXuElxvrjzxwWefdpaBl771xLEFhWsgCJRY';
-    final apiUrl = 'https://trefle.io/api/v1/plants?token=$apiKey';
-
-    try {
-      final response = await http.get(Uri.parse(apiUrl));
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        final List<dynamic> plantList = data['data'];
-        plants.value = plantList.map((item) => Plant.fromJson(item)).toList();
-      } else {
-        throw Exception('Failed to load plant data');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
 
   void savePicture() {
     if (pickedImage.value != null) {

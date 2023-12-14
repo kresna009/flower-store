@@ -1,7 +1,7 @@
 import 'package:flower_store/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flower_store/controllers/controller.dart';
+import 'package:flower_store/controllers/Controller.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {

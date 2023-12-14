@@ -4,9 +4,9 @@ import 'package:flower_store/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:flower_store/controllers/controller.dart';
+import 'package:flower_store/controllers/Controller.dart';
 
-int _selectedIndex = 2;
+int _selectedIndex = 3;
 
 class AddImage extends StatelessWidget {
   final FlowerController searchController = Get.put(FlowerController());

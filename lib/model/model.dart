@@ -38,6 +38,10 @@ class Plant {
       description: json['family_common_name'] ?? 'N/A',
     );
   }
+  Map<String, dynamic> toJson() => {
+        'common_name': name,
+        'family_common_name': description,
+      };
 }
 
 class User {

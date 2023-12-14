@@ -11,8 +11,6 @@ class DatabaseProvider extends ChangeNotifier {
   List<String> get selectedDocumentIds => _selectedDocumentIds;
 
   Future<void> createFlower(String name, String description) async {
-    // Replace this with your actual logic to create a flower in the database
-    // For demonstration purposes, we'll add a dummy flower
     final newFlower = {
       'documentId': DateTime.now().millisecondsSinceEpoch.toString(),
       'name': name,

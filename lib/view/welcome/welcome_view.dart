@@ -1,4 +1,4 @@
-import 'package:flower_store/controllers/controller.dart';
+import 'package:flower_store/controllers/Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
