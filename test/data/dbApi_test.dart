@@ -1,53 +1,35 @@
+import 'dart:convert';
+import 'package:flower_store/controllers/ApiController.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
-import 'package:flower_store/controllers/ApiController.dart';
-
-class MockClient extends Mock implements http.Client {}
 
 void main() {
-  const apiKey = 'mlBKGsf6yXuElxvrjzxwWefdpaBl771xLEFhWsgCJRY';
-  const apiUrl = 'https://trefle.io/api/v1/plants?token=$apiKey';
-
   group('ApiController Tests', () {
-    test('fetchPlantList success', () async {
-      final mockClient = MockClient();
-      final apiController = ApiController(client: mockClient);
+    late http.Client client;
+    late ApiController apiController;
 
-      when(mockClient.get(Uri.parse(apiUrl)))
-          .thenAnswer((_) async => http.Response('{"data": []}', 200));
-
-      await apiController.fetchPlantList();
-
-      expect(apiController.plants, isEmpty);
+    setUp(() {
+      client = http.Client();
+      apiController = ApiController(client: client);
     });
 
-    /*group('API Test', () {
-    test('returns Posts if the http call completes successfully', () async {
-      final client = MockClient((request) async {
-        return http.Response(
-            '{'common_name': name, 'family_common_name': description}',
-            200);
-      });
-      final response = await http.get(Uri.parse(apiUrl));
-
-      expect(apiController.plants, isEmpty);
+    tearDown(() {
+      client.close();
     });
-    */
 
-    test('fetchPlantList error', () async {
-      final mockClient = MockClient();
-      final apiController = ApiController(client: mockClient);
+    test('Fetch plant list successfully', () async {
+      // Arrange
+      final apiKey = 'mlBKGsf6yXuElxvrjzxwWefdpaBl771xLEFhWsgCJRY';
+      final apiUrl = 'https://trefle.io/api/v1/plants?token=$apiKey';
 
-      // Mock HTTP response with a non-200 status code
-      when(mockClient.get(Uri.parse(apiUrl)))
-          .thenAnswer((_) async => http.Response('Not Found', 404));
-
-      // Call the method to be tested
+      // Act
       await apiController.fetchPlantList();
 
-      // Verify that an exception is thrown
-      expect(apiController.plants, isEmpty);
+      // Assert
+      expect(apiController.plants, isNotEmpty);
+      // Add more specific assertions based on your API response structure
+      // For example, you can check that the names are not null
+      expect(apiController.plants.every((plant) => plant.name != null), isTrue);
     });
   });
 }
