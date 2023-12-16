@@ -2,17 +2,22 @@ import 'package:appwrite/appwrite.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ClientController extends GetxController {
-  Client client = Client();
+  late Client client;
 
   @override
   void onInit() {
     super.onInit();
     const endPoint = "https://cloud.appwrite.io/v1";
-    const projectID = "6569f57da65129d3fd36";
+    const projectId = "6569f57da65129d3fd36";
 
-    client
+    client = Client()
         .setEndpoint(endPoint)
-        .setProject(projectID)
+        .setProject(projectId)
         .setSelfSigned(status: true);
   }
+
+  String getEndpoint() {
+    return client.endPoint;
+  }
+
 }
